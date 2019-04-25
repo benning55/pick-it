@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
 <html lang="en">
+
 <head>
     {% block head %}
-    <meta charset="UTF-8">
-    <title>Title</title>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            ul#horin{
+                min-width: 696px;
+                list-style: none;
+            }
+            ul#horin li{
+                display: inline;
+            }
+        </style>
     {% endblock %}
 </head>
+
 <body>
     {% block body %}
-        <h2>This is Home page</h2>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
+      {% load static %} <!-- This mean posts app static file -->
+        <div class="container">
+            <h2 class="text-center">This is Home page</h2>
+            <br>
+            {% for post in posts %}
+                <div class="pb-5 border text-center">
+                    <img class="pt-5" src="../../static/{{ post.pic }}" alt="" width="25%">
+                    <h2>Model: {{ post.model }}</h2>
+                    <h3>Owner: {{ post.owner }}</h3>
+                    {% for price in post.prices %}
+                        <ul id="horin">
+                            <li>Hour: {{ price.hour }}</li>
+                            <li>Day: {{ price.day }}</li>
+                            <li>Week: {{ price.week }}</li>
+                            <li>Month: {{ price.month }}</li>
+                        </ul>
+                    {% endfor %}
+                    <small>Create date: {{ post.date_post }}</small>
                 </div>
+                <br>
             {% endfor %}
-
-        {% endif %}
+        </div>
     {% endblock %}
 </body>
+
 </html>
