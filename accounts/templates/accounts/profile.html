@@ -1,8 +1,40 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block head %}
     <title>Profile</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 {% endblock %}
 
 {% block body %}
-    <h1>{{ user.username }}</h1>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+        {% endif %}
+        <div class="card" style="width: 18rem;">
+            <img src="{{ user.profile.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.username }}</h5>
+                <p class="card-text">{{ user.email }}</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                    Profile Information
+                </legend>
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}
