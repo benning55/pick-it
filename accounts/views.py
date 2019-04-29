@@ -39,7 +39,7 @@ def register(request):
             email.send()
             # username = form.cleaned_data.get('username')
             # messages.success(request, f'Your account has been created! You are now can login {username}!')
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return render(request, 'accounts/mail_state.html', {'title': 'Please confirm your email address to complete the registration'})
     else:
         form = UserRegisterForm()
 
@@ -57,6 +57,10 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return render(request, 'accounts/mail_state.html', {'title': 'Thank you for your email confirmation. Now you can login your account.'})
     else:
-        return HttpResponse('Activation link is invalid!')
+        return render(request, 'accounts/mail_state.html', {'title': 'Activation link is invalid!'})
+
+
+def profile(request):
+    return render(request, 'accounts/profile.html')
