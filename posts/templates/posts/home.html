@@ -26,18 +26,18 @@
             <br>
             {% for post in posts %}
                 <div class="pb-5 border text-center">
-                    <img class="pt-5" src="../../static/{{ post.pic }}" alt="" width="25%">
-                    <h2>Model: {{ post.model }}</h2>
-                    <h3>Owner: {{ post.owner }}</h3>
-                    {% for price in post.prices %}
+                    <img class="pt-5" src="../../../media/{{ post.image.path }}" alt="" width="25%">
+                    <img src="../../../media/{{ post.car.owner.profile.image }}" alt="" width="5%">
+                    <h2>Model: {{ post.car.car_model }}</h2>
+                    <h3>Owner: {{ post.car.owner }}</h3>
+                    <p>Detail: {{ post.car.detail }}</p>
                         <ul id="horin">
-                            <li>Hour: {{ price.hour }}</li>
-                            <li>Day: {{ price.day }}</li>
-                            <li>Week: {{ price.week }}</li>
-                            <li>Month: {{ price.month }}</li>
+                            <li>Hour: {{ post.price.hour }}</li>
+                            <li>Day: {{ post.price.day }}</li>
+                            <li>Week: {{ post.price.week }}</li>
+                            <li>Month: {{ post.price.month }}</li>
                         </ul>
-                    {% endfor %}
-                    <small>Create date: {{ post.date_post }}</small>
+                    <small>Create date: {{ post.car.date_posted }}</small>
                 </div>
                 <br>
             {% endfor %}
