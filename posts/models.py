@@ -48,6 +48,7 @@ class Post(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE, blank=True, null=True)
     price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, null=True)
     review = models.ForeignKey(Review, on_delete=models.CASCADE, blank=True, null=True)
+    date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f'{self.car.owner.username} Post {self.id}'

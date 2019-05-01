@@ -5,7 +5,7 @@
 <head>
     {% block head %}
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>Detail Page</title>
         <style>
             ul#horin{
                 min-width: 696px;
@@ -22,29 +22,27 @@
     {% block body %}
       {% load static %} <!-- This mean posts app static file -->
         <div class="container">
-            <h2 class="text-center">This is Home page</h2>
+            <h2 class="text-center">This is Detail Page</h2>
             <br>
-            {% for car in cars %}
                 <div class="pb-5 border text-center">
-                    {% for img in car.image_set.all  %}
+                    {% for img in object.image_set.all  %}
                         <img class="pt-5" src="../../../media/{{ img.path }}" alt="" width="25%">
                     {% endfor %}
-                    <img src="../../../media/{{ car.owner.profile.image }}" alt="" width="5%">
-                    <a href="{% url 'detail' car.owner.id %}"><h2>Model: {{ car.car_model }}</h2></a>
-                    <h3>Owner: {{ car.owner }}</h3>
-                    <p>Detail: {{ car.detail }}</p>
-                        {% for money in car.price_set.all %}
+                    <img src="../../../media/{{ object.owner.profile.image }}" alt="" width="5%">
+                    <h2>Model: {{ object.car_model }}</h2>
+                    <h3>Owner: {{ object.owner }}</h3>
+                    <p>Detail: {{ object.detail }}</p>
+                        {% for money in object.price_set.all %}
                             <ul id="horin">
-                                <li>Hour: {{ money.hour }}</li>
-                                <li>Day: {{ money.day }}</li>
-                                <li>Week: {{ money.week }}</li>
-                                <li>Month: {{ money.month }}</li>
+                                <li>Hour: {{ money.price.hour }}</li>
+                                <li>Day: {{ money.price.day }}</li>
+                                <li>Week: {{ money.price.week }}</li>
+                                <li>Month: {{ money.price.month }}</li>
                             </ul>
                         {% endfor %}
-                    <small>Create date: {{ car.date_posted }}</small>
+                    <small>Create date: {{ object.date_posted }}</small>
                 </div>
                 <br>
-            {% endfor %}
         </div>
     {% endblock %}
 </body>

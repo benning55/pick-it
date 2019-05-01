@@ -5,29 +5,32 @@ from .models import Profile
 
 
 class UserRegisterForm(UserCreationForm):
-    YEARS = [x for x in range(1940, 2021)]
-
     email = forms.EmailField(help_text='required')
     first_name = forms.CharField(label='FirstName', max_length=100)
     last_name = forms.CharField(label='LastName', max_length=100)
-    dob = forms.DateField(label='DateOfBirth', widget=forms.SelectDateWidget(years=YEARS))
-    license_driver = forms.CharField(label='LicenseDriver')
-    address = forms.CharField(label='Address', max_length=500, widget=forms.Textarea)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'dob', 'license_driver', 'address']
+        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name']
 
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
+    first_name = forms.CharField(label='FirstName', max_length=100)
+    last_name = forms.CharField(label='LastName', max_length=100)
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email', 'first_name', 'last_name']
 
 
 class ProfileUpdateForm(forms.ModelForm):
+    YEARS = [x for x in range(1940, 2021)]
+    dob = forms.DateField(label='DateOfBirth', widget=forms.SelectDateWidget(years=YEARS))
+    license_driver = forms.CharField(label='LicenseDriver')
+    address = forms.CharField(label='Address', max_length=500, widget=forms.Textarea)
+    phone = forms.CharField(max_length=10)
+
     class Meta:
         model = Profile
-        fields = ['image']
+        fields = ['image', 'dob', 'license_driver', 'address', 'phone']

@@ -1,32 +1,6 @@
 from django.shortcuts import render
-from .models import Car, Post
-
-posts = [
-    {
-        'owner': 'Benning',
-        'model': 'Yamaha yzf-r3 2019',
-        'date_post': '25/04/2019',
-        'prices': [{
-            'hour': 50,
-            'day': 100,
-            'week': 1000,
-            'month': 5000
-        }],
-        'pic': 'images/r3.jpg'
-    },
-    {
-        'owner': 'Muse',
-        'model': 'Yamaha yzf-r15 2017',
-        'date_post': '25/04/2019',
-        'prices': [{
-            'hour': 50,
-            'day': 100,
-            'week': 1000,
-            'month': 5000
-        }],
-        'pic': 'images/r15.jpg'
-    }
-]
+from django.views.generic import ListView, DetailView, CreateView
+from .models import Post, Car
 
 
 def home(request):
@@ -34,6 +8,23 @@ def home(request):
         'posts': Post.objects.all()
     }
     return render(request, 'posts/home.html', context=context)
+
+
+class PostListView(ListView):
+    model = Car
+    template_name = 'posts/home.html'
+    context_object_name = 'cars'
+
+
+class PostDetailView(DetailView):
+    model = Car
+    template_name = 'posts/detail.html'
+
+
+class PostCreateView(CreateView):
+    model = Car
+    template_name = 'posts/new_post.html'
+    fields = '__all__'
 
 
 def about(request):
