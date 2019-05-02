@@ -5,7 +5,8 @@ from django.forms import formset_factory
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Car, Image, Price
-from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm
+from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm
+
 
 
 def home(request):
@@ -42,6 +43,16 @@ def detail(request, car_id):
         context['review_form'] = ReviewCarForm()
 
     return render(request, 'posts/detail.html', context=context)
+
+
+def rent_post(request, car_id):
+    context = {}
+    post = Car.objects.get(pk=car_id)
+
+    context['renting_form'] = RentingCarForm()
+
+    return render(request, 'posts/rent_post.html', context=context)
+
 
 
 @login_required
