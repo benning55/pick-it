@@ -5,7 +5,7 @@ from django.forms import formset_factory
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Car, Image, Price
-from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm
+from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm
 
 
 def home(request):
@@ -25,6 +25,23 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Car
     template_name = 'posts/detail.html'
+
+
+def detail(request, car_id):
+    context = {}
+    post = Car.objects.get(pk=car_id)
+    if request.method == 'POST':
+        review_form = ReviewCarForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.car = Car.objects.get(id=car_id)
+            review.save()
+            messages.success(request, f'Your Review had just review {post.car_model}')
+    else:
+        context['post'] = post
+        context['review_form'] = ReviewCarForm()
+
+    return render(request, 'posts/detail.html', context=context)
 
 
 @login_required
@@ -70,3 +87,4 @@ def create_post(request):
 
 def about(request):
     return render(request, 'posts/about.html')
+

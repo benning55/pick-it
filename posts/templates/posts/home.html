@@ -31,7 +31,7 @@
                     {% endfor %}
                     <img src="../../../media/{{ car.owner.profile.image }}" alt="" width="5%">
                     <a href="{% url 'detail' car.id %}"><h2>Model: {{ car.car_model }}</h2></a>
-                    <a href="{% url 'profile' %}"><h3>Owner: {{ car.owner }}</h3></a>
+                    <h3>Owner: {{ car.owner }}</h3>
                     <p>Detail: {{ car.detail }}</p>
                         {% for money in car.price_set.all %}
                             <ul id="horin">

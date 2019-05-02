@@ -1,7 +1,25 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    <title>Display Profile</title>
 {% endblock %}
 
 {% block body %}
+    <div class="container text-center">
+        <div class="pb-3" style="text-align: -webkit-center;">
+            <div class="card" style="width: 18rem;">
+                <img src="../../../media/{{ users.profile.image }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">User: {{ users.username }}</h5>
+                    <p class="card-text">Email: {{ users.email }}</p>
+                    <p class="card-text">Firstname: {{ users.first_name }}</p>
+                    <p class="card-text">Lastname: {{ users.last_name }}</p>
+                    <p class="card-text">DateOfBirth: {{ users.profile.dob }}</p>
+                    <p class="card-text">Address: {{ users.profile.address }}</p>
+                    <p class="card-text">Phone: {{ users.profile.phone }}</p>
+                    <p class="card-text">License Driver: {{ users.profile.license_driver }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

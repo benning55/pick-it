@@ -87,3 +87,13 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'accounts/profile.html', context)
+
+
+def display_profile(request, user_id):
+    users = User.objects.get(pk=user_id)
+
+    context = {
+        'users': users
+    }
+
+    return render(request, 'accounts/display_profile.html', context=context)

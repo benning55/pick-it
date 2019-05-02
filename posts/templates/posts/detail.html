@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -22,27 +23,67 @@
     {% block body %}
       {% load static %} <!-- This mean posts app static file -->
         <div class="container">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                   {{ message }}
+                 </div>
+               {% endfor %}
+            {% endif %}
             <h2 class="text-center">This is Detail Page</h2>
             <br>
                 <div class="pb-5 border text-center">
-                    {% for img in object.image_set.all  %}
+                    {% for img in post.image_set.all  %}
                         <img class="pt-5" src="../../../media/{{ img.path }}" alt="" width="25%">
                     {% endfor %}
-                    <img src="../../../media/{{ object.owner.profile.image }}" alt="" width="5%">
-                    <h2>Model: {{ object.car_model }}</h2>
-                    <h3>Owner: {{ object.owner }}</h3>
-                    <p>Detail: {{ object.detail }}</p>
-                        {% for money in object.price_set.all %}
-                            <ul id="horin">
-                                <li>Hour: {{ money.price.hour }}</li>
-                                <li>Day: {{ money.price.day }}</li>
-                                <li>Week: {{ money.price.week }}</li>
-                                <li>Month: {{ money.price.month }}</li>
-                            </ul>
-                        {% endfor %}
-                    <small>Create date: {{ object.date_posted }}</small>
+                    <img src="../../../media/{{ post.owner.profile.image }}" alt="" width="5%">
+                    <h2>Model: {{ post.car_model }}</h2>
+                    {% if request.user.id == post.owner.id %}
+                        <a href="{% url 'profile' %}"><h3>Owner: {{ post.owner }}</h3></a>
+                    {% else %}
+                        <a href="{% url 'display_profile' post.owner.id %}"><h3>Owner: {{ post.owner }}</h3></a>
+                    {% endif %}
+                    <p>Detail: {{ post.detail }}</p>
+                    {% for money in post.price_set.all %}
+                        <ul id="horin">
+                            <li>Hour: {{ money.hour }}</li>
+                            <li>Day: {{ money.day }}</li>
+                            <li>Week: {{ money.week }}</li>
+                            <li>Month: {{ money.month }}</li>
+                        </ul>
+                    {% endfor %}
+                    <small>Create date: {{ post.date_posted }}</small>
                 </div>
                 <br>
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">
+                            Review
+                        </legend>
+                        {% for rev in post.review_set.all %}
+                            <div class="border">
+                                <div class="row">
+                                    <div class="col-md-12"><label>Rate:</label></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12"><input class="form-control" type="number" value="{{ rev.rating }}" readonly></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12"><label>Description:</label></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12"><input type="text" class="form-control" value="{{ rev.review }}" readonly></div>
+                                </div>
+                            </div>
+                            <br>
+                        {% endfor %}
+                        {{ review_form|crispy }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Submit Review</button>
+                    </div>
+                </form>
         </div>
     {% endblock %}
 </body>

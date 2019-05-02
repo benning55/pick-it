@@ -1,5 +1,5 @@
 from django import forms
-from .models import Car, Image, Price
+from .models import Car, Image, Price, Review
 
 
 class CarRegisterForm(forms.ModelForm):
@@ -28,4 +28,13 @@ class PriceCarRegisterForm(forms.ModelForm):
 
     class Meta:
         model = Price
+        exclude = ['car']
+
+
+class ReviewCarForm(forms.ModelForm):
+    rating = forms.IntegerField(max_value=5, label="Rate")
+    review = forms.CharField(widget=forms.Textarea, label="Description")
+
+    class Meta:
+        model = Review
         exclude = ['car']
