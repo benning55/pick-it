@@ -4,13 +4,13 @@ from django.contrib.auth.models import User
 from django.forms import formset_factory
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Post, Car, Image, Price
+from .models import Car, Image, Price
 from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm
 
 
 def home(request):
     context = {
-        'posts': Post.objects.all()
+        'posts': Car.objects.all()
     }
     return render(request, 'posts/home.html', context=context)
 

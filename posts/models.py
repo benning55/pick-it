@@ -10,6 +10,7 @@ class Car(models.Model):
     detail = models.TextField()
     car_license = models.CharField(max_length=255)
     date_posted = models.DateTimeField(default=timezone.now)
+    car_address = models.CharField(max_length=100, default='None')
 
     def __str__(self):
         return f'{self.owner.username} Car {self.car_model}'
@@ -41,14 +42,3 @@ class Price(models.Model):
 
     def __str__(self):
         return f'{self.car.owner.username} Price {self.car.car_model}'
-
-
-class Post(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, blank=True, null=True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, blank=True, null=True)
-    price = models.ForeignKey(Price, on_delete=models.CASCADE, blank=True, null=True)
-    review = models.ForeignKey(Review, on_delete=models.CASCADE, blank=True, null=True)
-    date_posted = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return f'{self.car.owner.username} Post {self.id}'
