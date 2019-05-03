@@ -2,6 +2,15 @@
 
 {% block head %}
     <title>Display Profile</title>
+    <style>
+            ul#horin{
+                min-width: 696px;
+                list-style: none;
+            }
+            ul#horin li{
+                display: inline;
+            }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -20,6 +29,37 @@
                     <p class="card-text">License Driver: {{ users.profile.license_driver }}</p>
                 </div>
             </div>
+        </div>
+        <br>
+        <legend class="border-bottom mb-4">
+            All {{ users.username }} Post
+        </legend>
+        {% for post in users.car_set.all %}
+            <div class="pb-3">
+                <div class="pb-5 border text-center">
+                    {% for img in post.image_set.all %}
+                        <img class="pt-5" src="../../../media/{{ img.path }}" alt="" width="25%">
+                    {% endfor %}
+                        <img src="../../../media/{{ post.owner.profile.image }}" alt="" width="5%">
+                        <a href="{% url 'detail' post.id %}"><h2>Model: {{ post.car_model }}</h2></a>
+                        {% if request.user.id == post.owner.id %}
+                            <a href="{% url 'profile' %}"><h3>Owner: {{ post.owner }}</h3></a>
+                        {% else %}
+                            <a href="{% url 'display_profile' post.owner.id %}"><h3>Owner: {{ post.owner }}</h3></a>
+                        {% endif %}
+                        <p>Detail: {{ post.detail }}</p>
+                        {% for money in post.price_set.all %}
+                            <ul id="horin">
+                                <li>Hour: {{ money.hour }}</li>
+                                <li>Day: {{ money.day }}</li>
+                                <li>Week: {{ money.week }}</li>
+                                <li>Month: {{ money.month }}</li>
+                            </ul>
+                        {% endfor %}
+                        <small>Create date: {{ post.date_posted }}</small>
+                    </div>
+            </div>
+        {% endfor %}
         </div>
     </div>
 {% endblock %}

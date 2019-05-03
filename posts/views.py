@@ -1,10 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
 from django.forms import formset_factory
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Car, Image, Price
+from .models import Car, Image, Price, Renting
 from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm
 
 
@@ -37,7 +40,8 @@ def detail(request, car_id):
             review = review_form.save(commit=False)
             review.car = Car.objects.get(id=car_id)
             review.save()
-            messages.success(request, f'Your Review had just review {post.car_model}')
+            messages.success(request, f'You had just review {post.car_model}')
+            return redirect('detail', car_id=car_id)
     else:
         context['post'] = post
         context['review_form'] = ReviewCarForm()
@@ -47,12 +51,37 @@ def detail(request, car_id):
 
 def rent_post(request, car_id):
     context = {}
-    post = Car.objects.get(pk=car_id)
-
-    context['renting_form'] = RentingCarForm()
+    car = Car.objects.get(pk=car_id)
+    if request.method == 'POST':
+        renting_form = RentingCarForm(request.POST, request.FILES or None)
+        current_user = request.user
+        if renting_form.is_valid():
+            rent = renting_form.save(commit=False)
+            rent.user = current_user
+            rent.car = car
+            rent.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Someone want to rent your car!' + car.owner.username
+            message = render_to_string('posts/mail_notify.html', {
+                'user': current_user,
+                'domain': current_site.domain,
+                'car': car,
+                'rent': rent.id
+            })
+            to_email = car.owner.email
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+            messages.success(request, f'Your Car has been register')
+            return redirect('rent_post', car_id)
+        else:
+            messages.error(request, f'The form is not correct')
+            return redirect('rent_post', car_id)
+    else:
+        context['renting_form'] = RentingCarForm()
 
     return render(request, 'posts/rent_post.html', context=context)
-
 
 
 @login_required

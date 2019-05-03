@@ -1,6 +1,8 @@
 from django import forms
 import datetime
 from django.core.exceptions import ValidationError
+import logging
+import pytz
 
 from .models import Car, Image, Price, Review, Renting
 
@@ -45,24 +47,22 @@ class ReviewCarForm(forms.ModelForm):
 
 
 class RentingCarForm(forms.ModelForm):
+    date_time_start = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd h:m:s")
+    date_time_end = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd h:m:s")
+    license_image = forms.ImageField(label="Image", help_text="ถ่ายรูปคู่บัตรใบขับขี่")
 
     class Meta:
         model = Renting
         exclude = ['user', 'car']
-        widgets = {
-            'date_time_start': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime'}),
-            'date_time_end': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime'}),
-            'type_use': forms.Select(),
-            'time_use': forms.NumberInput()
-        }
 
     def clean(self):
-        date = super().clean()
+        cleaned_data = super().clean()
+        start = cleaned_data.get('date_time_start')
+        end = cleaned_data.get('date_time_end')
+        new_start = start.replace(tzinfo=None)
+        new_end = end.replace(tzinfo=None)
 
-        start = date.get('date_time_start')
-        end = date.get('date_time_end')
-
-        if start > end:
+        if new_start > new_end:
             raise ValidationError('End date cannot come before start sate')
-        elif start < datetime.datetime.now().date():
+        elif new_start < datetime.datetime.now():
             raise ValidationError('Please do not fill date past')

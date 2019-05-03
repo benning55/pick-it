@@ -1,0 +1,6 @@
+ {% autoescape off %}
+        Hi {{ car.owner.first_name }},
+        This user {{ user.username }} wants to rent your car {{ car.car_model }},
+        click link below to see more detail!
+        http://{{ domain }}/
+{% endautoescape %}
