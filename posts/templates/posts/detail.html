@@ -78,13 +78,17 @@
                             </div>
                             <br>
                         {% endfor %}
-                        {{ review_form|crispy }}
+                        {% if request.user.id != post.owner.id  %}{{ review_form|crispy }}{% endif %}
                     </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">Submit Review</button>
-                    </div>
+                    {% if request.user.id != post.owner.id  %}
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Submit Review</button>
+                        </div>
+                    {% endif %}
                 </form>
-                <a href="{% url 'rent_post' post.id %}"><button>Renting</button></a>
+                {% if request.user.id != post.owner.id  %}
+                    <a class="pb-3" href="{% url 'rent_post' post.id %}"><button>Renting</button></a>
+                {% endif %}
         </div>
     {% endblock %}
 </body>
