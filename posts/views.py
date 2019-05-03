@@ -7,7 +7,7 @@ from django.forms import formset_factory
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Car, Image, Price, Renting
+from .models import Car, Image, Price, Renting, Contract
 from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm
 
 
@@ -82,6 +82,59 @@ def rent_post(request, car_id):
         context['renting_form'] = RentingCarForm()
 
     return render(request, 'posts/rent_post.html', context=context)
+
+
+def rent_decide(request, rent_id):
+    rented = Renting.objects.get(pk=rent_id)
+
+    context = {}
+
+    context['rented'] = rented
+
+    return render(request, 'posts/rent_decide.html', context=context)
+
+
+def rent_accept(request, rent_id):
+    rented = Renting.objects.get(pk=rent_id)
+    Contract.objects.create(
+        user=rented.user,
+        car=rented.car,
+        status='1'
+    )
+    current_site = get_current_site(request)
+    mail_subject = 'Your request have been accept'
+    message = render_to_string('posts/mail_accept.html', {
+        'user': rented.user,
+        'domain': current_site.domain,
+        'car': rented.car,
+        'phone': rented.car.owner.profile.phone
+    })
+    to_email = rented.user.email
+    email = EmailMessage(
+        mail_subject, message, to=[to_email]
+    )
+    email.send()
+
+    return render(request, 'posts/rent_status.html', {'status': 'You have been accept thank you for using us!'})
+
+
+def rent_decline(request, rent_id):
+    rented = Renting.objects.get(pk=rent_id)
+    current_site = get_current_site(request)
+    mail_subject = 'Your request have been decline'
+    message = render_to_string('posts/mail_decline.html', {
+        'user': rented.user,
+        'domain': current_site.domain,
+        'car': rented.car,
+        'phone': rented.car.owner.profile.phone
+    })
+    to_email = rented.user.email
+    email = EmailMessage(
+        mail_subject, message, to=[to_email]
+    )
+    email.send()
+
+    return render(request, 'posts/rent_status.html', {'status': 'You have decline the request thank you for your time.'})
 
 
 @login_required

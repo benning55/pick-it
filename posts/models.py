@@ -63,3 +63,17 @@ class Renting(models.Model):
     def __str__(self):
         return f'{self.user.username} request rent {self.car.car_model} of {self.car.owner.username}'
 
+
+class Contract(models.Model):
+    type_choice = (
+        ('0', 'No'),
+        ('1', 'Yes'),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    status = models.CharField(max_length=1, choices=type_choice, default='0')
+
+    def __str__(self):
+        return f'{self.user.username} have transaction with {self.car.owner.username}'
+

@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block head %}
+    <title>Renting</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center">
+        <h1 class="pb-3">Rent Requst Detail</h1>
+        <div class="pb-3" style="text-align: -webkit-center;">
+            <div class="card" style="width: 18rem;">
+                <h5>Car driver license image</h5>
+                <img src="/media/{{ rented.license_image }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="{% url 'display_profile' rented.user.id %}"><h5 class="card-title">Request User: {{ rented.user.username }}</h5></a>
+                    <a href="{% url 'detail' rented.car.id %}"><p class="card-text">Car request: {{ rented.car.car_model }}</p></a>
+                    <p class="card-text">Rent start: {{ rented.date_time_start }}</p>
+                    <p class="card-text">Rent end: {{ rented.date_time_end }}</p>
+                    <p class="card-text">Price rent type: {{ rented.get_type_use_display }}</p>
+                    <p class="card-text">How long: {{ rented.time_use }} {{ rented.get_type_use_display }}</p>
+                    <p class="card-text">Phone to contract renter: {{ rented.user.profile.phone }}</p>
+                    <a href="{% url 'rent_accept' rented.id %}" class="btn btn-primary bg-success border-success">Accept</a>
+                    <a href="{% url 'rent_decide' rented.id %}" class="btn btn-primary bg-danger border-danger">Decline</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
