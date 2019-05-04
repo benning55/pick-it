@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, CreateView
 from .models import Car, Image, Price, Renting, Contract
-from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm
+from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm, CarUpdateForm, ImageUpdateForm, PriceUpdateForm
 
 
 
@@ -96,11 +96,18 @@ def rent_decide(request, rent_id):
 
 def rent_accept(request, rent_id):
     rented = Renting.objects.get(pk=rent_id)
-    Contract.objects.create(
-        user=rented.user,
-        car=rented.car,
-        status='1'
-    )
+    rents = Renting.objects.all()
+    count = 0
+    for rent in rents:
+        if rent.user == rented.user and rent.car == rented.car:
+            count += 1
+    if count < 1:
+        Contract.objects.create(
+            user=rented.user,
+            car=rented.car,
+            status='1'
+        )
+
     current_site = get_current_site(request)
     mail_subject = 'Your request have been accept'
     message = render_to_string('posts/mail_accept.html', {
@@ -180,4 +187,69 @@ def create_post(request):
 
 def about(request):
     return render(request, 'posts/about.html')
+
+
+def delete(request, car_id):
+
+    car = Car.objects.get(pk=car_id)
+
+    car.delete()
+
+    return redirect('profile')
+
+
+def update(request, car_id):
+
+    cars = Car.objects.get(pk=car_id)
+    prices = Price.objects.select_related().filter(car=cars.id).first()
+    ImageFormSet = formset_factory(ImageCarRegisterForm, extra=2, max_num=10)
+
+    if request.method == 'POST':
+        car_form = CarRegisterForm(request.POST, instance=cars)
+        image_form = ImageFormSet(request.POST, request.FILES)
+        price_form = PriceCarRegisterForm(request.POST, instance=prices)
+        if car_form.is_valid() and price_form.is_valid():
+            cared = car_form.save(commit=False)
+            cared.owner = cars.owner
+            cared.save()
+            priced = price_form.save(commit=False)
+            priced.car = cars
+            priced.save()
+            if image_form.is_valid():
+                for img_form in image_form:
+                    if img_form.cleaned_data.get('image_id'):
+                        img = Image.objects.get(id=img_form.cleaned_data.get('image_id'))
+                        if img:
+                            img.path = img_form.cleaned_data.get('path')
+                            img.save()
+                    else:
+                        if img_form.cleaned_data.get('path'):
+                            Image.objects.create(
+                                path=img_form.cleaned_data.get('path'),
+                                car=cars
+                            )
+            messages.success(request, f'Your post has been updated!')
+            return redirect('update', cars.id)
+
+    else:
+        car_form = CarRegisterForm(instance=cars)
+
+        data = []
+
+        for img in cars.image_set.all():
+            data.append(
+                {
+                    'path': img.path
+                }
+            )
+        price_form = PriceCarRegisterForm(instance=prices)
+
+        image_form = ImageFormSet(initial=data)
+
+    context = {
+        'car_form': car_form,
+        'image_form': image_form,
+        'price_form': price_form
+    }
+    return render(request, 'posts/update.html', context)
 

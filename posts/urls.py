@@ -11,5 +11,7 @@ urlpatterns = [
     path('post/rent/<int:car_id>/', views.rent_post, name='rent_post'),
     path('post/rent/decide/<int:rent_id>/', views.rent_decide, name='rent_decide'),
     path('post/rent/accept/<int:rent_id>/', views.rent_accept, name='rent_accept'),
-    path('post/rent/decline/<int:rent_id>/', views.rent_decline, name='rent_decline')
+    path('post/rent/decline/<int:rent_id>/', views.rent_decline, name='rent_decline'),
+    path('post/delete/<int:car_id>/', views.delete, name='delete'),
+    path('post/update/<int:car_id>/', views.update, name='update')
 ]

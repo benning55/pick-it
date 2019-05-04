@@ -46,6 +46,27 @@ class ReviewCarForm(forms.ModelForm):
         exclude = ['car']
 
 
+class CarUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Car
+        fields = ['detail', 'car_license', 'car_address']
+
+
+class ImageUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Image
+        fields = ['path']
+
+
+class PriceUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Price
+        fields = ['hour', 'day', 'week', 'month']
+
+
 class RentingCarForm(forms.ModelForm):
     date_time_start = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd h:m:s")
     date_time_end = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd h:m:s")

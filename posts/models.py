@@ -75,5 +75,5 @@ class Contract(models.Model):
     status = models.CharField(max_length=1, choices=type_choice, default='0')
 
     def __str__(self):
-        return f'{self.user.username} have transaction with {self.car.owner.username}'
+        return f'{self.user.username} have transaction with {self.car.car_model}'
 

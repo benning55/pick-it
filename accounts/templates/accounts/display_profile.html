@@ -27,6 +27,9 @@
                     <p class="card-text">Address: {{ users.profile.address }}</p>
                     <p class="card-text">Phone: {{ users.profile.phone }}</p>
                     <p class="card-text">License Driver: {{ users.profile.license_driver }}</p>
+                    {% for tran in users.contract_set.all %}
+                        <p class="card-text">{{ tran }}</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>

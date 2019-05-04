@@ -78,13 +78,19 @@
                             </div>
                             <br>
                         {% endfor %}
-                        {% if request.user.id != post.owner.id  %}{{ review_form|crispy }}{% endif %}
+                    {% for tran in request.user.contract_set.all %}
+                        {% if tran.car.id == post.id and request.user.id != post.owner.id%}
+                            {{ review_form|crispy }}
+                        {% endif %}
+                    {% endfor %}
                     </fieldset>
-                    {% if request.user.id != post.owner.id  %}
-                        <div class="form-group">
-                            <button class="btn btn-outline-info" type="submit">Submit Review</button>
-                        </div>
-                    {% endif %}
+                    {% for tran in request.user.contract_set.all %}
+                        {% if tran.car.id == post.id and request.user.id != post.owner.id %}
+                            <div class="form-group">
+                                <button class="btn btn-outline-info" type="submit">Submit Review</button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </form>
                 {% if request.user.id != post.owner.id  %}
                     <a class="pb-3" href="{% url 'rent_post' post.id %}"><button>Renting</button></a>
