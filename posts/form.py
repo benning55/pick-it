@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 import logging
 import pytz
 
-from .models import Car, Image, Price, Review, Renting
+from .models import Car, Image, Price, Review, Renting, Report
 
 
 class CarRegisterForm(forms.ModelForm):
@@ -19,6 +19,7 @@ class CarRegisterForm(forms.ModelForm):
 
 
 class ImageCarRegisterForm(forms.ModelForm):
+    image_id = forms.IntegerField(required=False, widget=forms.HiddenInput)
     path = forms.ImageField(label="Image", required=True)
 
     class Meta:
@@ -27,7 +28,7 @@ class ImageCarRegisterForm(forms.ModelForm):
 
 
 class PriceCarRegisterForm(forms.ModelForm):
-    hour = forms.IntegerField(label="Price rent per hour", required=True)
+    hour = forms.IntegerField(label="Price rent per hour", required=True, help_text="This price required")
     day = forms.IntegerField(label="Price rent per day", required=False)
     week = forms.IntegerField(label="Price rent per week", required=False)
     month = forms.IntegerField(label="Price rent per month", required=False)
@@ -87,3 +88,11 @@ class RentingCarForm(forms.ModelForm):
             raise ValidationError('End date cannot come before start sate')
         elif new_start < datetime.datetime.now():
             raise ValidationError('Please do not fill date past')
+
+
+class ReportForm(forms.ModelForm):
+    text = forms.CharField(required=False, label="More Description")
+
+    class Meta:
+        model = Report
+        exclude = ['reported']

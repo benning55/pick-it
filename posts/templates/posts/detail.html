@@ -95,6 +95,7 @@
                 {% if request.user.id != post.owner.id  %}
                     <a class="pb-3" href="{% url 'rent_post' post.id %}"><button>Renting</button></a>
                 {% endif %}
+                 <a class="pb-3" href="{% url 'report' post.id %}"><button>Report</button></a>
         </div>
     {% endblock %}
 </body>

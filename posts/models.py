@@ -77,3 +77,15 @@ class Contract(models.Model):
     def __str__(self):
         return f'{self.user.username} have transaction with {self.car.car_model}'
 
+
+class Report(models.Model):
+    REPORTCHOICES = (
+        ('1', 'ก่อกวน'),
+        ('2', 'ทำผิดสัญญา'),
+        ('3', 'ข้อมูลยานพาหนะไม่ตรงกับSpecificationที่ตกลงเอาไว้'),
+        ('4', 'ข้อมูลส่วนตัวไม่ตรงกับความเป็นจริง'),
+        ('5', 'อื่น')
+    )
+    type = models.CharField(max_length=1, choices=REPORTCHOICES, null=False, blank=False)
+    text = models.CharField(max_length=255, null=True, blank=True)
+    reported = models.ForeignKey(Car, on_delete=models.CASCADE, null=True, blank=True)

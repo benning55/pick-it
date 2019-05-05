@@ -7,9 +7,9 @@ from django.forms import formset_factory
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Car, Image, Price, Renting, Contract
-from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm, CarUpdateForm, ImageUpdateForm, PriceUpdateForm
-
+from .models import Car, Image, Price, Renting, Contract, Report
+from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm, \
+    CarUpdateForm, ImageUpdateForm, PriceUpdateForm, ReportForm
 
 
 def home(request):
@@ -49,6 +49,7 @@ def detail(request, car_id):
     return render(request, 'posts/detail.html', context=context)
 
 
+@login_required
 def rent_post(request, car_id):
     context = {}
     car = Car.objects.get(pk=car_id)
@@ -206,7 +207,7 @@ def update(request, car_id):
 
     if request.method == 'POST':
         car_form = CarRegisterForm(request.POST, instance=cars)
-        image_form = ImageFormSet(request.POST, request.FILES)
+        image_form = ImageFormSet(request.POST, request.FILES or None)
         price_form = PriceCarRegisterForm(request.POST, instance=prices)
         if car_form.is_valid() and price_form.is_valid():
             cared = car_form.save(commit=False)
@@ -228,6 +229,7 @@ def update(request, car_id):
                                 path=img_form.cleaned_data.get('path'),
                                 car=cars
                             )
+
             messages.success(request, f'Your post has been updated!')
             return redirect('update', cars.id)
 
@@ -239,9 +241,11 @@ def update(request, car_id):
         for img in cars.image_set.all():
             data.append(
                 {
-                    'path': img.path
+                    'path': img.path,
+                    'image_id': img.id
                 }
             )
+        print(data)
         price_form = PriceCarRegisterForm(instance=prices)
 
         image_form = ImageFormSet(initial=data)
@@ -252,4 +256,28 @@ def update(request, car_id):
         'price_form': price_form
     }
     return render(request, 'posts/update.html', context)
+
+
+def report(request, car_id):
+
+    cars = Car.objects.get(pk=car_id)
+
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        if form.is_valid():
+            Report.objects.create(
+                type=form.cleaned_data.get('type'),
+                text=form.cleaned_data.get('text'),
+                reported=cars
+            )
+            messages.success(request, f'Your Report has been sent')
+            return redirect('report', car_id)
+    else:
+        form = ReportForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'posts/report.html', context=context)
 
