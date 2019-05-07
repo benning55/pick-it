@@ -25,12 +25,13 @@ class Image(models.Model):
 
 
 class Review(models.Model):
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
     review = models.TextField()
     car = models.ForeignKey(Car, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.car.owner.username} review {self.car.car_model} '
+        return f'{self.car.owner.username} review {self.car.car_model} by {self.reviewer} '
 
 
 class Price(models.Model):

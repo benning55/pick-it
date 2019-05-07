@@ -1,71 +1,137 @@
-{% extends 'base.html' %}
+{% extends 'newbase.html' %}
 {% load crispy_forms_tags %}
+{% load cloudinary %}
 {% block head %}
     <title>Profile</title>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-              </div>
-            {% endfor %}
-        {% endif %}
-        <div class="pb-3">
-            <div class="card" style="width: 18rem;">
-                <img src="{{ user.profile.image.url }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ user.username }}</h5>
-                    <p class="card-text">{{ user.email }}</p>
+    <header class="masthead" style="height: 100vh;">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center justify-content-center text-center">
+
+
+                <div class="col-lg-10 ">
+                    <label class=newbtn>
+                        <img id="blah"
+                             style="vertical-align: middle;width: 250px;height: 250px;border-radius: 50%;object-fit: cover;border: #FFFFFF solid 5px;"
+                             src="{{ user.profile.image.url }}">
+                        {#                        {{ p_form.image }}#}
+                    </label>
+                </div>
+
+
+                <div class="col-lg-10 ">
+                    <h2 class="text-uppercase text-white font-weight-bold">{{ user.first_name }} {{ user.last_name }}</h2>
+                </div>
+                <div class="col-lg-10 ">
+                    <h4 class="text-uppercase text-white font-weight-bold">{{ user.username }}</h4>
+                </div>
+                <div class="col-lg-10 ">
+                    <h4 class=" text-white font-weight-bold">{{ user.email }}</h4>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <section id="about">
+        <div class="container-fluid p-0">
+            <!-- Page Content -->
+            <div class="container">
+
+                <!-- Page Heading -->
+                <h1 class="my-4">Your Car(s)</h1>
+                <hr>
+                <div class="row">
+                    {% for car in user.car_set.all %}
+                        <div class="col-lg-4 col-sm-6 mb-4">
+                            <a href="{% url 'detail' car.id %}">
+                                <div class="card h-100">
+                                    <img class="card-img-top"
+                                         style="object-fit: cover;height: 100%;"
+                                         src="../../../media/{{ car.image_set.all.first.path }}"
+                                         alt="">
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <a href="{% url 'detail' car.id %}">{{ car.car_model }}</a>
+                                            <h6><img
+                                                    style="vertical-align: middle;width: 30px;height: 30px;border-radius: 50%;object-fit: cover;margin-right:10px"
+                                                    src="../../../media/{{ car.owner.profile.image }}" alt=""
+                                                    width="5%">{{ car.owner }}</h6>
+                                        </h4>
+                                        {% for money in car.price_set.all %}
+                                            <ul id="horin">
+                                                <li>Hour: {{ money.hour }}</li>
+                                                <li>Day: {{ money.day }}</li>
+                                                <li>Week: {{ money.week }}</li>
+                                                <li>Month: {{ money.month }}</li>
+                                            </ul>
+                                        {% endfor %}
+                                        <small>Create date: {{ car.date_posted }}</small>
+
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        <div class="row pt-2">
+                                            <a href="{% url 'update' car.id %}"
+                                               class="col-sm-6 btn btn-primary bg-success border-success pr-1">update
+                                                post</a>
+                                            <a href="{% url 'delete' car.id %}"
+                                               class="col-sm-6 btn btn-primary bg-danger border-danger">delete post</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">
-                    Profile Information
-                </legend>
-                {{ u_form|crispy }}
-                {{ p_form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Update</button>
-            </div>
-        </form>
-        {% for post in user.car_set.all %}
-            <div class="pb-3">
-                <div class="pb-5 border text-center">
-                    {% for img in post.image_set.all %}
-                        <img class="pt-5" src="../../../media/{{ img.path }}" alt="" width="25%">
-                    {% endfor %}
-                        <img src="../../../media/{{ post.owner.profile.image }}" alt="" width="5%">
-                        <a href="{% url 'detail' post.id %}"><h2>Model: {{ post.car_model }}</h2></a>
-                        {% if request.user.id == post.owner.id %}
-                            <a href="{% url 'profile' %}"><h3>Owner: {{ post.owner }}</h3></a>
-                        {% else %}
-                            <a href="{% url 'display_profile' post.owner.id %}"><h3>Owner: {{ post.owner }}</h3></a>
-                        {% endif %}
-                        <p>Detail: {{ post.detail }}</p>
-                        {% for money in post.price_set.all %}
-                            <ul id="horin">
-                                <li>Hour: {{ money.hour }}</li>
-                                <li>Day: {{ money.day }}</li>
-                                <li>Week: {{ money.week }}</li>
-                                <li>Month: {{ money.month }}</li>
-                            </ul>
+    </section>
+
+
+    <section class="fdb-block">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
                         {% endfor %}
-                        <small>Create date: {{ post.date_posted }}</small>
-                        <div class="row pt-2">
-                            <a href="{% url 'update' post.id%}" class="col-sm-6 btn btn-primary bg-success border-success pr-1">update post</a>
-                            <a href="{% url 'delete' post.id %}" class="col-sm-6 btn btn-primary bg-danger border-danger">delete post</a>
-                        </div>
+                    {% endif %}
+
+                    <div class="pb-3">
+
                     </div>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">
+                                Profile Information
+                            </legend>
+
+                            {{ u_form|crispy }}
+                            {{ p_form|crispy }}
+{#                            <input id="{{ p_form.image.id }}" type="file">#}
+
+                            {#                            {{ p_form|crispy }}#}
+
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Update</button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="small text-center text-muted">Copyright &copy; 2019 - Start Bootstrap</div>
+        </div>
+    </footer>
 {% endblock %}

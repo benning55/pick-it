@@ -44,7 +44,7 @@ class ReviewCarForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        exclude = ['car']
+        exclude = ['reviewer','car']
 
 
 class CarUpdateForm(forms.ModelForm):

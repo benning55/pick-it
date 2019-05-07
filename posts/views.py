@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
@@ -13,10 +14,11 @@ from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, R
 
 
 def home(request):
-    context = {
-        'posts': Car.objects.all()
-    }
-    return render(request, 'posts/home.html', context=context)
+    context = Car.objects.all()
+    paginator = Paginator(context, 2)  # Show 25 contacts per page
+    page = request.GET.get('page')
+    contacts = paginator.get_page(page)
+    return render(request, 'posts/home.html',{'contacts': contacts})
 
 
 class PostListView(ListView):
@@ -31,6 +33,7 @@ class PostDetailView(DetailView):
     template_name = 'posts/detail.html'
 
 
+
 def detail(request, car_id):
     context = {}
     post = Car.objects.get(pk=car_id)
@@ -39,6 +42,7 @@ def detail(request, car_id):
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.car = Car.objects.get(id=car_id)
+            review.reviewer = request.user
             review.save()
             messages.success(request, f'You had just review {post.car_model}')
             return redirect('detail', car_id=car_id)
@@ -148,7 +152,7 @@ def rent_decline(request, rent_id):
 @login_required
 def create_post(request):
     context = {}
-    ImageCarRegisterFormSet = formset_factory(ImageCarRegisterForm, extra=3, max_num=6)
+    ImageCarRegisterFormSet = formset_factory(ImageCarRegisterForm, extra=6, max_num=6)
     if request.method == 'POST':
         car_form = CarRegisterForm(request.POST)
         image_form = ImageCarRegisterFormSet(request.POST, request.FILES or None)
@@ -203,7 +207,7 @@ def update(request, car_id):
 
     cars = Car.objects.get(pk=car_id)
     prices = Price.objects.select_related().filter(car=cars.id).first()
-    ImageFormSet = formset_factory(ImageCarRegisterForm, extra=2, max_num=10)
+    ImageFormSet = formset_factory(ImageCarRegisterForm, extra=5, max_num=10)
 
     if request.method == 'POST':
         car_form = CarRegisterForm(request.POST, instance=cars)

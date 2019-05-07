@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'newbase.html' %}
 {% load crispy_forms_tags %}
 
 {% block head %}
@@ -6,27 +6,122 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-               {{ message }}
-             </div>
-           {% endfor %}
-        {% endif %}
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">
-                    Update Post
-                </legend>
-                {{ car_form|crispy }}
-                {{ image_form|crispy }}
-                {{ price_form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Update</button>
+    {#    <div class="container">#}
+    {#        {% if messages %}#}
+    {#          {% for message in messages %}#}
+    {#            <div class="alert alert-{{ message.tags }}">#}
+    {#               {{ message }}#}
+    {#             </div>#}
+    {#           {% endfor %}#}
+    {#        {% endif %}#}
+    {#        <form method="POST" enctype="multipart/form-data">#}
+    {#            {% csrf_token %}#}
+    {#            <fieldset class="form-group">#}
+    {#                <legend class="border-bottom mb-4">#}
+    {#                    Update Post#}
+    {#                </legend>#}
+    {#                {{ car_form|crispy }}#}
+    {#                {{ image_form|crispy }}#}
+    {#                {{ price_form|crispy }}#}
+    {#            </fieldset>#}
+    {#            <div class="form-group">#}
+    {#                <button class="btn btn-outline-info" type="submit">Update</button>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#    </div>#}
+    <section class="fdb-block fdb-viewport bg-dark masthead">
+        <div class="container justify-content-center align-items-center d-flex" style="margin-top: 62px;">
+            <div class="row justify-content-center text-center">
+                <div class="col-12 col-md-8">
+
+                    <h1>Update For rent your Car</h1>
+                    <p class="lead">Many people want to use your car. But you have to fill car's Information as system
+                        needed</p>
+                    <p class="mt-5"><a class="btn btn-dark">Start for Rent</a></p>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </section>
+    {#    <div class="container">#}
+    {#        {% if messages %}#}
+    {#            {% for message in messages %}#}
+    {#                <div class="alert alert-{{ message.tags }}">#}
+    {#                    {{ message }}#}
+    {#                </div>#}
+    {#            {% endfor %}#}
+    {#        {% endif %}#}
+    {#        <form method="POST" enctype="multipart/form-data">#}
+    {#            {% csrf_token %}#}
+    {#            <fieldset class="form-group">#}
+    {#                <legend class="border-bottom mb-4">#}
+    {#                    New Post#}
+    {#                </legend>#}
+    {#                {{ car_form|crispy }}#}
+    {#                {{ image_form|crispy }}#}
+    {#                {{ price_form|crispy }}#}
+    {#            </fieldset>#}
+    {#            <div class="form-group">#}
+    {#                <button class="btn btn-outline-info" type="submit">Register Car</button>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#    </div>#}
+    <section class="fdb-block">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-4">
+                                Car Information
+                            </legend>
+                            {{ car_form|crispy }}
+                            {{ image_form|crispy }}
+                            {#                            <input type="hidden" name="form-TOTAL_FORMS" value="5" id="id_form-TOTAL_FORMS">#}
+                            {#                            <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">#}
+                            {#                            <input type="hidden" name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS">#}
+                            {#                            <input type="hidden" name="form-MAX_NUM_FORMS" value="6" id="id_form-MAX_NUM_FORMS">#}
+                            {##}
+                            {#                            <input onchange="upload_img(this);" type="file" name="form-0-path" accept="image/*" id="id_form-0-path">#}
+                            {#                            <input type="hidden" name="form-0-image_id" id="id_form-0-image_id">#}
+                            {#                            <img id="img_id" src="#" alt="your image" />#}
+                            {#                            <script type="text/javascript">#}
+                            {#                                function upload_img(input) {#}
+                            {#                                    if (input.files && input.files[0]) {#}
+                            {#                                        var reader = new FileReader();#}
+                            {#                                        reader.onload = function (e) {#}
+                            {#                                            $('#img_id').attr('src', e.target.result);#}
+                            {#                                        }#}
+                            {#                                        reader.readAsDataURL(input.files[0]);#}
+                            {#                                    }#}
+                            {#                                }#}
+                            {#                            </script>#}
+                            {#                            <input type="file" name="form-1-path" accept="image/*" id="id_form-1-path">#}
+                            {#                            <input type="hidden" name="form-1-image_id" id="id_form-1-image_id">#}
+                            {#                            <input type="file" name="form-2-path" accept="image/*" id="id_form-2-path">#}
+                            {#                            <input type="hidden" name="form-2-image_id" id="id_form-2-image_id">#}
+                            {#                            <input type="file" name="form-3-path" accept="image/*" id="id_form-3-path">#}
+                            {#                            <input type="hidden" name="form-3-image_id" id="id_form-3-image_id">#}
+                            {#                            <input type="file" name="form-4-path" accept="image/*" id="id_form-4-path">#}
+                            {#                            <input type="hidden" name="form-4-image_id" id="id_form-4-image_id">#}
+
+                            {{ price_form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type="submit">Update</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

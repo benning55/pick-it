@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import cloudinary
+
+CLOUDINARY = {
+  'cloud_name': 'pickit',
+  'api_key': '941672178124348',
+  'api_secret': 'bIkM8ivgRI6Ukm_O_DX6PctNi0U',
+}
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,6 +38,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,7 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig'
+
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,6 +94,9 @@ DATABASES = {
         'USER': 'benning',
         'PASSWORD': 'root',
         'HOST': '35.198.223.114',
+        # 'USER': 'root',
+        # 'PASSWORD': '8450',
+        # 'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }

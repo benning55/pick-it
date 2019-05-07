@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'bootstrap.html' %}
 {% load crispy_forms_tags %}
 
 {% block head %}
@@ -6,26 +6,77 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">
-                    Join Today
-                </legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+    {#    <div class="container">#}
+    {#        <form method="POST">#}
+    {#            {% csrf_token %}#}
+    {#            <fieldset class="form-group">#}
+    {#                <legend class="border-bottom mb-4">#}
+    {#                    Join Today#}
+    {#                </legend>#}
+    {#                {{ form|crispy }}#}
+    {#            </fieldset>#}
+    {#            <div class="form-group">#}
+    {#                <button class="btn btn-outline-info" type="submit">Sign Up</button>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#        <div class="border-top pt-3 pb-3">#}
+    {#            <small class="text-muted">#}
+    {#                Already Have An Account?#}
+    {#                <a class="ml-2" href="{% url 'login' %}">#}
+    {#                    SignIn#}
+    {#                </a>#}
+    {#            </small>#}
+    {#        </div>#}
+    {#    </div>#}
+
+    <section class="fdb-block" style="padding-top: 3rem; background-image: url('https://cdn.jsdelivr.net/gh/froala/design-blocks@2.0.1/dist/imgs//hero/purple.svg')">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-7 col-md-5 text-center">
+                    <div class="fdb-box fdb-touch">
+                        <div class="row">
+                            <div class="col">
+                                <h1>Register</h1>
+                            </div>
+                        </div>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row text-left justify-content-center pt-5">
+
+                                <div class="form-group">
+
+                                    {{ form.first_name|as_crispy_field }}
+
+                                    {{ form.last_name|as_crispy_field }}
+
+                                    {{ form.email|as_crispy_field }}
+
+                                    {{ form.username|as_crispy_field }}
+
+                                    {{ form.password1|as_crispy_field }}
+
+                                    {{ form.password2|as_crispy_field }}
+                                    <div class="form-group">
+                                        <button class="btn btn-outline-info" type="submit">Sign Up</button>
+                                    </div>
+                                </div>
+
+                                <div class="border-top pt-3 pb-3">
+                                    <small class="text-muted">
+                                        Already Have An Account?
+                                        <a class="ml-2" href="{% url 'login' %}">
+                                            SignIn
+                                        </a>
+                                    </small>
+
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
-        <div class="border-top pt-3 pb-3">
-            <small class="text-muted">
-                Already Have An Account?
-                <a class="ml-2" href="{% url 'login' %}">
-                    SignIn
-                </a>
-            </small>
         </div>
-    </div>
+    </section>
 {% endblock %}
