@@ -46,19 +46,11 @@ class Price(models.Model):
 
 
 class Renting(models.Model):
-    type_choice = (
-        ('0', 'Hour'),
-        ('1', 'Day'),
-        ('2', 'Week'),
-        ('3', 'Month'),
-        ('4', 'Up to car owner')
-    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     date_time_start = models.DateTimeField(null=False)
     date_time_end = models.DateTimeField(null=False)
-    type_use = models.CharField(max_length=1, choices=type_choice, default='4')
-    time_use = models.IntegerField(null=True)
+    time_use = models.DurationField(null=True)
     license_image = models.ImageField(default='license.jpg', upload_to='license_pic')
 
     def __str__(self):

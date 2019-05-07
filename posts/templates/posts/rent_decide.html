@@ -17,8 +17,8 @@
                     <a href="{% url 'detail' rented.car.id %}"><p class="card-text">Car request: {{ rented.car.car_model }}</p></a>
                     <p class="card-text">Rent start: {{ rented.date_time_start }}</p>
                     <p class="card-text">Rent end: {{ rented.date_time_end }}</p>
-                    <p class="card-text">Price rent type: {{ rented.get_type_use_display }}</p>
-                    <p class="card-text">How long: {{ rented.time_use }} {{ rented.get_type_use_display }}</p>
+                    <p class="card-text">How long: {{ long }} </p>
+                    <p class="card-text">How Much: {{ total_money }} bath </p>
                     <p class="card-text">Phone to contract renter: {{ rented.user.profile.phone }}</p>
                     <a href="{% url 'rent_accept' rented.id %}" class="btn btn-primary bg-success border-success">Accept</a>
                     <a href="{% url 'rent_decline' rented.id %}" class="btn btn-primary bg-danger border-danger">Decline</a>

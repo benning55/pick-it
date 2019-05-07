@@ -11,7 +11,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from .models import Car, Image, Price, Renting, Contract, Report
 from .form import CarRegisterForm, ImageCarRegisterForm, PriceCarRegisterForm, ReviewCarForm, RentingCarForm, \
     CarUpdateForm, ImageUpdateForm, PriceUpdateForm, ReportForm
-
+import re
 
 def home(request):
     context = Car.objects.all()
@@ -61,9 +61,13 @@ def rent_post(request, car_id):
         renting_form = RentingCarForm(request.POST, request.FILES or None)
         current_user = request.user
         if renting_form.is_valid():
+            start = renting_form.cleaned_data['date_time_start']
+            end = renting_form.cleaned_data['date_time_end']
+            final = end - start
             rent = renting_form.save(commit=False)
             rent.user = current_user
             rent.car = car
+            rent.time_use = final
             rent.save()
             current_site = get_current_site(request)
             mail_subject = 'Someone want to rent your car!' + car.owner.username
@@ -90,13 +94,120 @@ def rent_post(request, car_id):
 
 
 def rent_decide(request, rent_id):
+    context = {}
     rented = Renting.objects.get(pk=rent_id)
 
-    context = {}
+    total = rented.time_use.total_seconds()
+    real_time = display_time(total, 3)
 
+    car_owner = rented.car.price_set.all()
+    for prices in car_owner:
+        hour = prices.hour
+        day = prices.day
+        week = prices.week
+        month = prices.month
+
+    f = (re.findall('\d+', real_time))
+    print(f)
+
+    box = ""
+
+    result = real_time.find('month')
+    result1 = real_time.find('week')
+    result2 = real_time.find('day')
+    result3 = real_time.find('hour')
+
+    total_money = 0
+
+    if result > 0:
+        box += 'm'
+
+    if result1 > 0:
+        box += 'w'
+
+    if result2 > 0:
+        box += 'd'
+
+    if result3 > 0:
+        box += 'h'
+
+    if box == 'mwdh':
+        total_money += month * int(f[0])
+        total_money += week * int(f[1])
+        total_money += day * int(f[2])
+        total_money += hour * int(f[3])
+    elif box == 'mwd':
+        total_money += month * int(f[0])
+        total_money += week * int(f[1])
+        total_money += day * int(f[2])
+    elif box == 'mwh':
+        total_money += month * int(f[0])
+        total_money += week * int(f[1])
+        total_money += hour * int(f[2])
+    elif box == 'mdh':
+        total_money += month * int(f[0])
+        total_money += day * int(f[1])
+        total_money += hour * int(f[2])
+    elif box == 'wdh':
+      total_money += week * int(f[0])
+      total_money += day * int(f[1])
+      total_money += hour * int(f[2])
+    elif box == 'wd':
+      total_money += week * int(f[0])
+      total_money += day * int(f[1])
+    elif box == 'wh':
+      total_money += week * int(f[0])
+      total_money += hour * int(f[1])
+    elif box == 'mw':
+      total_money += month * int(f[0])
+      total_money += week * int(f[1])
+    elif box == 'md':
+      total_money += month * int(f[0])
+      total_money += day * int(f[1])
+    elif box == 'mh':
+      total_money += month * int(f[0])
+      total_money += hour * int(f[1])
+    elif box == 'dh':
+      total_money += day * int(f[0])
+      total_money += hour * int(f[1])
+    elif box == 'm':
+      total_money += month * int(f[0])
+    elif box == 'w':
+      total_money += week * int(f[0])
+    elif box == 'd':
+      total_money += day * int(f[0])
+    elif box == 'h':
+      total_money += hour * int(f[0])
+
+
+    context['long'] = real_time
+    context['total_money'] = total_money
     context['rented'] = rented
 
     return render(request, 'posts/rent_decide.html', context=context)
+
+
+intervals = (
+    ('month', 2419200), # 60 * 60 * 24 * 7 * 4
+    ('weeks', 604800),  # 60 * 60 * 24 * 7
+    ('days', 86400),    # 60 * 60 * 24
+    ('hours', 3600),    # 60 * 60
+    ('minutes', 60),
+    ('seconds', 1),
+    )
+
+
+def display_time(seconds, granularity=2):
+    result = []
+
+    for name, count in intervals:
+        value = seconds // count
+        if value:
+            seconds -= value * count
+            if value == 1:
+                name = name.rstrip('s')
+            result.append("{} {}".format(int(value), name))
+    return ', '.join(result[:granularity])
 
 
 def rent_accept(request, rent_id):

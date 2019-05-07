@@ -75,12 +75,12 @@ class RentingCarForm(forms.ModelForm):
 
     class Meta:
         model = Renting
-        exclude = ['user', 'car']
+        exclude = ['user', 'car', 'time_use']
 
     def clean(self):
         cleaned_data = super().clean()
-        start = cleaned_data.get('date_time_start')
-        end = cleaned_data.get('date_time_end')
+        start = cleaned_data['date_time_start']
+        end = cleaned_data['date_time_end']
         new_start = start.replace(tzinfo=None)
         new_end = end.replace(tzinfo=None)
 
