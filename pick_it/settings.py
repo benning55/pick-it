@@ -97,7 +97,12 @@ DATABASES = {
         # 'USER': 'root',
         # 'PASSWORD': '8450',
         # 'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'PORT': '3306',
+        'OPTIONS': {
+            'ssl' : {
+                'ssl_disabled': True
+            }
+        }
     }
 }
 
