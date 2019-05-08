@@ -95,6 +95,7 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST': '35.198.223.114',
         'PORT': '3306',
+        'USE_PURE': True
     }
     
 }
