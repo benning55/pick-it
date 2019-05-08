@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'pickit',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '178.128.80.227',
+        'HOST': '127.0.0.1',
         # 'USER': 'root',
         # 'PASSWORD': '8450',
         # 'HOST': '127.0.0.1',
