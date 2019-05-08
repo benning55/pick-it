@@ -87,18 +87,14 @@ WSGI_APPLICATION = 'pick_it.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES['default']['OPTIONS'] = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pickit',
         'USER': 'benning',
         'PASSWORD': 'root',
         'HOST': '35.198.223.114',
-        # 'USER': 'root',
-        # 'PASSWORD': '8450',
-        # 'HOST': '127.0.0.1',
         'PORT': '3306',
-        'ssl': {'ca': os.path.join(os.path.dirname(__file__), 'rds', 'mysql-ssl-ca-cert.pem')
         }
     }
 }
