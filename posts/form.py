@@ -3,6 +3,7 @@ import datetime
 from django.core.exceptions import ValidationError
 import logging
 import pytz
+from django.forms import DateTimeInput
 
 from .models import Car, Image, Price, Review, Renting, Report
 
@@ -11,7 +12,8 @@ class CarRegisterForm(forms.ModelForm):
     car_model = forms.CharField(max_length=100)
     detail = forms.Textarea()
     car_license = forms.CharField(max_length=12)
-    car_address = forms.CharField(max_length=255, help_text='ที่อยู่ของยานพาหนะที่ต้องการเช่าเพื่อสะดวกในการไปรับรถในโซนพระจอมเกล้า เช่น เกกีงาม2, Vcondo, RNP')
+    car_address = forms.CharField(max_length=255,
+                                  help_text='ที่อยู่ของยานพาหนะที่ต้องการเช่าเพื่อสะดวกในการไปรับรถในโซนพระจอมเกล้า เช่น เกกีงาม2, Vcondo, RNP')
 
     class Meta:
         model = Car
@@ -44,38 +46,36 @@ class ReviewCarForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        exclude = ['reviewer','car']
+        exclude = ['reviewer', 'car']
 
 
 class CarUpdateForm(forms.ModelForm):
-
     class Meta:
         model = Car
         fields = ['detail', 'car_license', 'car_address']
 
 
 class ImageUpdateForm(forms.ModelForm):
-
     class Meta:
         model = Image
         fields = ['path']
 
 
 class PriceUpdateForm(forms.ModelForm):
-
     class Meta:
         model = Price
         fields = ['hour', 'day', 'week', 'month']
 
 
 class RentingCarForm(forms.ModelForm):
-    date_time_start = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd h:m:s")
-    date_time_end = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd h:m:s")
+    date_time_start = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd hh:mm:ss")
+    date_time_end = forms.DateTimeField(help_text="โปรดใส่วันที่ตามรูปแบบนี้ yyyy-mm-dd hh:mm:ss")
     license_image = forms.ImageField(label="Image", help_text="ถ่ายรูปคู่บัตรใบขับขี่")
 
     class Meta:
         model = Renting
         exclude = ['user', 'car', 'time_use']
+        # widgets ={'date_time_start': forms.DateTimeInput(attrs={'class':'form-control','type':'datetime-local','format':'%Y-%m-%d %H:%M:%S'})}
 
     def clean(self):
         cleaned_data = super().clean()

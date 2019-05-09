@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from accounts.tokens import account_activation_token
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from cloudinary.forms import cl_init_js_callbacks
 
 
@@ -65,6 +65,7 @@ def activate(request, uidb64, token):
 
 
 @login_required()
+@permission_required('accounts.view_profile')
 def profile(request):
     # to fix username is not define problem
     username = "username"
