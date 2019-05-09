@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="719f1415-7df0-44a8-81f7-4ec24c019867" name="Default Changelist" comment="add ui">
       <change afterPath="$PROJECT_DIR$/media/cars_pics/2019-audi-r8-onlocation_1.jpg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/media/cars_pics/2019-audi-r8.jpg" afterDir="false" />
@@ -25,6 +26,12 @@
       <change afterPath="$PROJECT_DIR$/media/profile_pics/IMG_1662.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/posts/templates/posts/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/posts/templates/posts/report.html" afterDir="false" />
+=======
+    <list default="true" id="719f1415-7df0-44a8-81f7-4ec24c019867" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pick_it.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pick_it.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,8 +92,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/accounts/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="253">
               <caret line="31" column="21" lean-forward="true" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+=======
+            <state relative-caret-position="1065">
+              <caret line="237" column="26" selection-start-line="237" selection-start-column="26" selection-end-line="237" selection-end-column="26" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
             </state>
           </provider>
         </entry>
@@ -115,8 +127,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/posts/models.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="298">
               <caret line="75" column="24" lean-forward="true" selection-start-line="75" selection-start-column="24" selection-end-line="75" selection-end-column="24" />
+=======
+            <state relative-caret-position="714">
+              <caret line="69" column="22" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -127,6 +144,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/accounts/templates/accounts/profile.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="350">
               <caret line="146" column="37" selection-start-line="146" selection-start-column="37" selection-end-line="146" selection-end-column="37" />
             </state>
@@ -138,6 +156,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1288">
               <caret line="70" column="25" selection-start-line="70" selection-start-column="25" selection-end-line="70" selection-end-column="25" />
+=======
+            <state relative-caret-position="1226">
+              <caret line="98" selection-start-line="98" selection-end-line="98" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -368,6 +390,7 @@
       <workItem from="1557050677207" duration="25908000" />
       <workItem from="1557114773114" duration="41578000" />
       <workItem from="1557192591930" duration="9954000" />
+<<<<<<< HEAD
       <workItem from="1557214244037" duration="14998000" />
       <workItem from="1557231722248" duration="3685000" />
       <workItem from="1557242997042" duration="12148000" />
@@ -380,16 +403,26 @@
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
       <updated>1557378490845</updated>
+=======
+      <workItem from="1557214244037" duration="16056000" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="294480000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
+=======
+    <option name="totallyTimeSpent" value="265693000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" sideWeight="0.5016611" side_tool="true" weight="0.21218716" />
@@ -787,8 +820,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/posts/templates/posts/update.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="350">
           <caret line="85" column="49" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+=======
+        <state relative-caret-position="1065">
+          <caret line="237" column="26" selection-start-line="237" selection-start-column="26" selection-end-line="237" selection-end-column="26" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
         </state>
       </provider>
     </entry>
@@ -801,8 +839,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/accounts/models.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="506">
           <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+=======
+        <state relative-caret-position="714">
+          <caret line="69" column="22" selection-start-line="69" selection-start-column="22" selection-end-line="69" selection-end-column="22" />
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
           <folding>
             <element signature="e#48#93#0" expanded="true" />
           </folding>
@@ -811,6 +854,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/posts/templates/posts/report.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="206">
           <caret line="78" column="39" lean-forward="true" selection-start-line="78" selection-start-column="39" selection-end-line="78" selection-end-column="39" />
         </state>
@@ -820,6 +864,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="31" column="21" lean-forward="true" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+=======
+        <state relative-caret-position="1226">
+          <caret line="98" selection-start-line="98" selection-end-line="98" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+>>>>>>> 88f4e7b67ecf433893b33ec71fba9e99c951043e
         </state>
       </provider>
     </entry>
