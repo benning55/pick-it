@@ -3,28 +3,70 @@
 
 {% block head %}
     <title>Renting</title>
+    <link rel=”stylesheet” href=”//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css”>
+    <link rel=”stylesheet” href=”/resources/demos/style.css”>
+    <script src=”https://code.jquery.com/jquery-1.12.4.js”></script>
+    <script src=”https://code.jquery.com/ui/1.12.1/jquery-ui.js”></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({minDate: 0, maxDate: "+24M"});
+        });
+    </script>
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-               {{ message }}
-             </div>
-           {% endfor %}
-        {% endif %}
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">
-                    Request Rent
-                </legend>
-                {{ renting_form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Send Rent</button>
+    {#    <div class="container">#}
+    {#        {% if messages %}#}
+    {#            {% for message in messages %}#}
+    {#                <div class="alert alert-{{ message.tags }}">#}
+    {#                    {{ message }}#}
+    {#                </div>#}
+    {#            {% endfor %}#}
+    {#        {% endif %}#}
+    {#        <form method="POST" enctype="multipart/form-data">#}
+    {#            {% csrf_token %}#}
+    {#            <fieldset class="form-group">#}
+    {#                <legend class="border-bottom mb-4">#}
+    {#                    Request Rent#}
+    {#                </legend>#}
+    {#                {{ renting_form|crispy }}#}
+    {#            </fieldset>#}
+    {#            <div class="form-group">#}
+    {#                <button class="btn btn-outline-info" type="submit">Send Rent</button>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#    </div>#}
+    <section class="fdb-block"
+             style="height: 100vh;padding-top: 3rem; background-image: url('https://cdn.jsdelivr.net/gh/froala/design-blocks@2.0.1/dist/imgs//hero/purple.svg')">
+        <div class="container" style="margin-top: 6vh;">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-7 col-md-5">
+                    <div class="fdb-box fdb-touch">
+                        <div class="row">
+                            <div class="col">
+                                <h1>Rent Form</h1>
+                            </div>
+                        </div>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <fieldset class="form-group">
+                                {{ renting_form|crispy }}
+                            </fieldset>
+                            <div class="form-group">
+                                <button class="btn btn-outline-info" type="submit">Send Rent</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </section>
+
 {% endblock %}

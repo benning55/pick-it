@@ -211,6 +211,7 @@ def display_time(seconds, granularity=2):
 
 
 def rent_accept(request, rent_id):
+    context = {}
     rented = Renting.objects.get(pk=rent_id)
     rents = Renting.objects.all()
     count = 0
@@ -237,8 +238,9 @@ def rent_accept(request, rent_id):
         mail_subject, message, to=[to_email]
     )
     email.send()
+    context['rented'] = rented.car
 
-    return render(request, 'posts/rent_status.html', {'status': 'You have been accept thank you for using us!'})
+    return render(request, 'posts/rent_status.html', {'context': context, 'status': 'You have been accept thank you for using us!'})
 
 
 def rent_decline(request, rent_id):
