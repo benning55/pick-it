@@ -85,34 +85,6 @@
                             </legend>
                             {{ car_form|crispy }}
                             {{ image_form|crispy }}
-                            {#                            <input type="hidden" name="form-TOTAL_FORMS" value="5" id="id_form-TOTAL_FORMS">#}
-                            {#                            <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">#}
-                            {#                            <input type="hidden" name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS">#}
-                            {#                            <input type="hidden" name="form-MAX_NUM_FORMS" value="6" id="id_form-MAX_NUM_FORMS">#}
-                            {##}
-                            {#                            <input onchange="upload_img(this);" type="file" name="form-0-path" accept="image/*" id="id_form-0-path">#}
-                            {#                            <input type="hidden" name="form-0-image_id" id="id_form-0-image_id">#}
-                            {#                            <img id="img_id" src="#" alt="your image" />#}
-                            {#                            <script type="text/javascript">#}
-                            {#                                function upload_img(input) {#}
-                            {#                                    if (input.files && input.files[0]) {#}
-                            {#                                        var reader = new FileReader();#}
-                            {#                                        reader.onload = function (e) {#}
-                            {#                                            $('#img_id').attr('src', e.target.result);#}
-                            {#                                        }#}
-                            {#                                        reader.readAsDataURL(input.files[0]);#}
-                            {#                                    }#}
-                            {#                                }#}
-                            {#                            </script>#}
-                            {#                            <input type="file" name="form-1-path" accept="image/*" id="id_form-1-path">#}
-                            {#                            <input type="hidden" name="form-1-image_id" id="id_form-1-image_id">#}
-                            {#                            <input type="file" name="form-2-path" accept="image/*" id="id_form-2-path">#}
-                            {#                            <input type="hidden" name="form-2-image_id" id="id_form-2-image_id">#}
-                            {#                            <input type="file" name="form-3-path" accept="image/*" id="id_form-3-path">#}
-                            {#                            <input type="hidden" name="form-3-image_id" id="id_form-3-image_id">#}
-                            {#                            <input type="file" name="form-4-path" accept="image/*" id="id_form-4-path">#}
-                            {#                            <input type="hidden" name="form-4-image_id" id="id_form-4-image_id">#}
-
                             {{ price_form|crispy }}
                         </fieldset>
                         <div class="form-group">
