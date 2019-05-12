@@ -145,7 +145,7 @@ EMAIL_PORT = 587
 STATIC_URL = '/static/'
 STATIC_ROOT = '/accounts/static'
 STATICFILES_DIRS = [
-  os.path.join(BASE_DIR, '/accounts/static')
+  os.path.join(BASE_DIR, 'accounts/static')
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
